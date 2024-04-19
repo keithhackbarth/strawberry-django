@@ -118,6 +118,39 @@ def test_update(mutation, fruits):
     ]
 
 
+def test_delete_with_filter(mutation, fruits):
+    result = mutation(
+        """
+        {
+          fruits: deleteFruits(
+            filters: {id: {exact: 1}}
+          ) {
+            id
+            name
+          }
+        }
+        """
+    )
+    assert not result.errors
+
+
+def test_update_with_filter(mutation, fruits):
+    result = mutation(
+        """
+        {
+          fruits: updateFruits(
+            data: { name: "orange" }
+            filters: {id: {exact: 1}}
+          ) {
+            id
+            name
+          }
+        }
+        """
+    )
+    assert not result.errors
+
+
 def test_update_m2m_with_validation_error(mutation, fruit):
     result = mutation(
         '{ fruits: updateFruits(data: { types: [{ name: "rotten"} ] }) { id types {'
