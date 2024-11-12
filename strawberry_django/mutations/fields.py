@@ -350,15 +350,13 @@ class DjangoUpdateMutation(DjangoMutationCUD, StrawberryDjangoFieldFilters):
         instance: models.Model | Iterable[models.Model],
         data: dict[str, Any],
     ):
-        # Do not optimize anything while retrieving the object to update
-        with DjangoOptimizerExtension.disabled():
-            return resolvers.update(
-                info,
-                instance,
-                data,
-                key_attr=self.key_attr,
-                full_clean=self.full_clean,
-            )
+        return resolvers.update(
+            info,
+            instance,
+            data,
+            key_attr=self.key_attr,
+            full_clean=self.full_clean,
+        )
 
 
 class DjangoDeleteMutation(
